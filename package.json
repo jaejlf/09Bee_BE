@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "소비자를 위한 공동구매 플랫폼, 공구비입니다.",
+  "main": "index.js",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.17.1",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14",
+    "ts-node": "^10.4.0"
+  },
+  "scripts": {
+    "start": "nodemon --exec ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1thefull-Project/Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1thefull-Project/Backend/issues"
+  },
+  "homepage": "https://github.com/1thefull-Project/Backend#readme"
+}
