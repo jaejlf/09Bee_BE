@@ -20,12 +20,12 @@ Typescript, NodeJS, Express, Passport
     <tr>
       <th>Front-end</th>
       <td>이영현<br/><a href="https://github.com/Lee-Yeonghyeon" target="_blank">@Lee-Yeonghyeon</a></td>
-      <td>최시운<br/><a href="https://github.com/xilucks" target="_blank">@xilucks</a></td>
+      <td colspan="2">최시운<br/><a href="https://github.com/xilucks" target="_blank">@xilucks</a></td>
     </tr>
     <tr>
       <th>Back-end</th>
       <td>박영민<br/><a href="https://github.com/ympark99" target="_blank">@ympark99</a></td>
-      <td>손재정<br/><a href="https://github.com/jaejlf" target="_blank">@jaejlf</a></td>
+      <td colspan="2">손재정<br/><a href="https://github.com/jaejlf" target="_blank">@jaejlf</a></td>
     </tr>
   </tbody>
 </table>
