@@ -6,7 +6,7 @@ var router = express.Router();
 var passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-import { db } from '../db';
+import { db } from '../index';
 import { userType } from '../interfaces/user';
 
 //MIDDLEWARE

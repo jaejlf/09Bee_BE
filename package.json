@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.176",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
