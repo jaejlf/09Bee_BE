@@ -2,9 +2,13 @@
 require('dotenv').config();
 
 const mongo_url = process.env.MONGODB_URL;
+const google_client = process.env.GOOGLE_CLIENT;
+const google_password = process.env.GOOGLE_PASSWORD;
 
-let config = {
-    mongoURL : mongo_url
+const config = {
+    mongoURL : mongo_url,
+    googleID : google_client,
+    googlePW : google_password
 }
 
 export default config;
