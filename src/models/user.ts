@@ -4,6 +4,10 @@ import { userType } from '../interfaces/user';
 import moment from "../controllers/moment";
 
 const user = new mongoose.Schema({
+    googleId: {
+        required: false,
+        type: String
+    },    
     provider: {
         required : false,
         type : String

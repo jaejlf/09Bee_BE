@@ -6,13 +6,14 @@ var passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 */
 module.exports = function (passport : any) {
+    
     //구글 로그인을 위해 /google로 이동
     router.get('/auth/google',
         passport.authenticate('google', { scope: ['email', 'profile'] }));
 
     //구글 로그인 후 홈페이지(/)로 이동
     router.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/user/login', session : true }),
+        passport.authenticate('google', { failureRedirect: '/auth/login', session : true }),
         function (req: any, res: any) {
             console.log('login success');
             console.log(req.user);
@@ -21,8 +22,10 @@ module.exports = function (passport : any) {
 
     //홈페이지(/)
     router.get('/', (req: any, res: any) => {
-        if(req.user) console.log(req.user);
+        if(res.user) console.log(req.user);
+        else console.log('req x');
         if(res.user) console.log(res.user);
+        else console.log('res x')
         const temp = getPage(req.user);
         res.send(temp);
     });
@@ -36,7 +39,6 @@ module.exports = function (passport : any) {
     //임시 페이지
     const getPage = (user: userType) => {
         if (user !== undefined) {
-            console.log(user);
             return `
         <a href="/auth/logout">logout</a>
         <h2>${user.name}님 환영합니다!</h2>

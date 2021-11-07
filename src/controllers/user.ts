@@ -3,15 +3,15 @@ import { userType } from "../interfaces/user";
 import config from '../config/config'
 import passport from 'passport'
 // import getNextSequence from './counter';
-//const GoogleStrategy = require('passport-google-oauth20').Strategy
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy
+//const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = function (app : any) {
-
+/*
     //strategy에서 받은 정보들을 user에 입력
     passport.serializeUser((user: any, done: any) => {
         // console.log('serializeUser', user)
-        return done(null, user);
+        return done(null, user.id);
     })
 
     //serializeUser에서 분해한 user._id로부터 원래 user값들을 다시 바인딩
@@ -21,6 +21,14 @@ module.exports = function (app : any) {
         return done(null, doc);
         })
     })
+*/
+
+    passport.serializeUser(function (user: any, done: any) {
+        done(null, user);
+    });
+    passport.deserializeUser(function (user: userType, done: any) {
+        done(null, user);
+    });
 
     passport.use(new GoogleStrategy({
         clientID: config.googleID,
@@ -28,26 +36,39 @@ module.exports = function (app : any) {
         callbackURL: "http://localhost:8080/auth/google/callback"
     },
 
-        function (_: any, __: any, profile: any, cb: any) {
-        User.findOne({ googleId: profile.id }, async (err: Error, doc: userType) => {
+        //function (_: any, __: any, profile: any, cb: any) {
+    function(accessToken : any, refreshToken : any, profile : any, cb : any) {
+        //console.log(profile);
+        
+        User.findOne({ email: profile.emails[0].value }, async (err: Error, doc: userType) => {
             if (err) return cb(err, null);            
             try {
-            if (!doc) {
-                // 추후 유저 id 저장 예정
-                //const userId: any = await getNextSequence("userInfo")
-                const newUser = new User({
-                    googleId: profile.id,
-                    username: profile.name.givenName,
-                    email: profile.emails[0].value,
-                })
+                // 새로운 유저
+                if (!doc) {
+                    console.log('신규 유저');
+                    //const userId: any = await getNextSequence("userInfo")
+                    const newUser = new User({
+                        googleID : profile.id,
+                        provider: profile.provider,
+                        name: profile.displayName,
+                        email: profile.emails[0].value
+                    })
 
-                await newUser.save();
-                cb(null, newUser);
-            }
-            cb(null, doc);
+                    await newUser.create(function(err : any){
+                        if(err) return console.log(err);
+                    });
+                    return cb(null, newUser);
+                }
+                // 기존 유저
+                //if(doc) console.log(doc);
+                else{ 
+                    console.log('기존 유저');
+                    return cb(null, doc);
+                }
 
             } catch (error) {
                 console.log('error');
+                return cb(error);
             }
             })
         }))

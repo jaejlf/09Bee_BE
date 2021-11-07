@@ -68,8 +68,8 @@ app.use(
     }))  
 
 //passport 실행
-app.use(passportModule.initialize())
-app.use(passportModule.session())
+app.use(passportModule.initialize());
+app.use(passportModule.session());
 
 //app을 인자로 보내서 passport를 return 값으로 받음
 var passport = require('./controllers/user')(app) // 받은 passport를 passort라는 변수에 저장
@@ -78,7 +78,7 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 // app.use('/', require('./routes/user'));
 
 // 라우터별로 실행 함수 지정
-app.use("/", userRoutes)
+app.use("/", userRoutes);
 /*
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
