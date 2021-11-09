@@ -36,7 +36,6 @@ module.exports = function (app : any) {
         callbackURL: "http://localhost:8080/auth/google/callback"
     },
 
-        //function (_: any, __: any, profile: any, cb: any) {
     function(accessToken : any, refreshToken : any, profile : any, cb : any) {
         //console.log(profile);
         
