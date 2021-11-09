@@ -39,7 +39,7 @@ const MongoDBStore = ConnectMongoDBSession(session)
 const mongoDBStore = new MongoDBStore({
   uri: mongoURL,
   databaseName: '09bee',
-  collection: "login"
+  collection: "sessions"
 })
 
 mongoDBStore.on("error", () => {

@@ -41,7 +41,9 @@ module.exports = function (app : any) {
         //console.log(profile);
         
         User.findOne({ email: profile.emails[0].value }, async (err: Error, doc: userType) => {
-            if (err) return cb(err, null);            
+            if (err) return cb(err, null);
+            console.log('doc');
+            console.log(doc);
             try {
                 // 새로운 유저
                 if (!doc) {
@@ -53,10 +55,15 @@ module.exports = function (app : any) {
                         name: profile.displayName,
                         email: profile.emails[0].value
                     })
-
-                    await newUser.create(function(err : any){
-                        if(err) return console.log(err);
-                    });
+                    //console.log('newUser');
+                    //console.log(newUser);
+                    await newUser.save().then((savedUser : any) => {
+                        //console.log('savedUser');
+                        //console.log(savedUser);
+                    })
+                    .catch((err : any) => {
+                        console.log(err);
+                    })
                     return cb(null, newUser);
                 }
                 // 기존 유저
