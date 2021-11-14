@@ -1,6 +1,7 @@
 import express from 'express';
+import cors from "cors";
 import config from './config/config'; // 환경변수 가져옴
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import passportModule from 'passport';
 import session from 'express-session';
 import ConnectMongoDBSession from "connect-mongodb-session";
@@ -46,6 +47,21 @@ mongoDBStore.on("error", () => {
     // Error 처리
   })
 
+// cors 지정
+app.use((req: any, res: any, next: any) => {
+  const corsWhitelist = [
+    'https://localhost:8080',
+    'http://localhost:8081'
+  ]
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin)
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  }
+
+  next();
+})
+
 //세션 설정
 app.use(
     session({
@@ -58,12 +74,12 @@ app.use(
         saveUninitialized: false,
         store: mongoDBStore, //세션을 데이터베이스에 저장
         cookie: {
-        sameSite: "none",
-        secure: true,
-        // 모든 범위에서 이 쿠키 사용 가능 "/"
-        // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
-        path: "/",
-        maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
+          sameSite: "none",
+          secure: true,
+          // 모든 범위에서 이 쿠키 사용 가능 "/"
+          // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
+          path: "/",
+          maxAge: 1000 * 60 * 60 * 24 * 7 // 만료시간 One Week
         }
     }))  
 
@@ -79,11 +95,14 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 
 // 라우터별로 실행 함수 지정
 app.use("/", userRoutes);
-/*
+app.use("/user", (req : any, res : any) => {
+  res.send('hello');
+});
+
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
 });
-*/
+
 app.use(
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
       const error = new Error("Not Found")

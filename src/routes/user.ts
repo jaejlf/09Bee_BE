@@ -25,10 +25,8 @@ module.exports = function (passport : any) {
             console.log('login success');
             console.log(req.user);
 
-            userData = req.user;
-            console.log('userdata');
-            console.log(userData);
-
+            userData = req.user; // userData에 넣어서 data 넘김
+            //res.send(req.user);
             res.redirect('/');
         });
 
@@ -43,9 +41,17 @@ module.exports = function (passport : any) {
         res.send(temp);
     });
 
+    router.get("/getuser", (req, res) => {
+        res.send(req.user);
+    })
+
     //로그아웃
     router.get('/auth/logout', function (req: any, res: any) {
         req.logout();
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid');
+            res.send('logout done');
+        });
         res.redirect('/');
     });
 

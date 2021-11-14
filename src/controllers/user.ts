@@ -23,12 +23,7 @@ module.exports = function (app : any) {
     })
 */
 
-    passport.serializeUser(function (user: any, done: any) {
-        done(null, user);
-    });
-    passport.deserializeUser(function (user: userType, done: any) {
-        done(null, user);
-    });
+
 
     passport.use(new GoogleStrategy({
         clientID: config.googleID,
@@ -41,8 +36,8 @@ module.exports = function (app : any) {
         
         User.findOne({ email: profile.emails[0].value }, async (err: Error, doc: userType) => {
             if (err) return cb(err, null);
-            console.log('doc');
-            console.log(doc);
+            //console.log('doc');
+            //console.log(doc);
             try {
                 // 새로운 유저
                 if (!doc) {
@@ -78,6 +73,14 @@ module.exports = function (app : any) {
             }
             })
         }))
+
+        passport.serializeUser(function (user: any, done: any) {
+            done(null, user);
+        });
+        passport.deserializeUser(function (user: userType, done: any) {
+            done(null, user);
+        });
+                
     return passport;
 }
 /*
