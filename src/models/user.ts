@@ -7,6 +7,10 @@ const user = new mongoose.Schema({
     googleId: {
         required: false,
         type: String
+    },
+    userId: {
+        required: false,
+        type: Number
     },    
     provider: {
         required : false,
