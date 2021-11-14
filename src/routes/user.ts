@@ -54,7 +54,6 @@ module.exports = function (passport : any) {
             res.clearCookie('connect.sid');
             res.send('logout done');
         });
-        
     });
 
     //임시 페이지
