@@ -1,6 +1,7 @@
 import express from 'express';
+//import cors from "cors";
 import config from './config/config'; // 환경변수 가져옴
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import passportModule from 'passport';
 import session from 'express-session';
 import ConnectMongoDBSession from "connect-mongodb-session";
@@ -16,16 +17,28 @@ export var db: any;
 
 // 몽구스 연결
 mongoose
-    .connect(mongoURL, {})
-    .then(() => {
-        console.log("connected MongoDB")
-    })
-    .catch((error) => {
-        console.log(error.message)
-    })
+  .connect(mongoURL,{ 
+  })
+  .then(() => {
+    console.log("connected MongoDB")
+  })
+  .catch((error) => {
+    console.log(error.message)
+  })
+/*
+const MongoClient = require('mongodb').MongoClient;
+MongoClient.connect( mongoURL, { useUnifiedTopology: true }, function (err: any, client: any) {
+    if (err) {
+        console.log('Failed to connect to MongoDB', err);
+        return;
+    }
+    db = client.db('09bee');
+    console.log('connected to MongoDB');
+})
+*/
 
 //세션 저장을 위해 몽고db에 로그인
-const MongoDBStore = ConnectMongoDBSession(session)
+const MongoDBStore = ConnectMongoDBSession(session);
 const mongoDBStore = new MongoDBStore({
     uri: mongoURL,
     databaseName: '09bee',
@@ -34,6 +47,22 @@ const mongoDBStore = new MongoDBStore({
 
 mongoDBStore.on("error", () => {
     // Error 처리
+})
+
+// cors 지정
+app.use((req: any, res: any, next: any) => {
+  const corsWhitelist = [
+    'https://localhost:8080',
+    'http://localhost:8080',
+    '*'
+  ]
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin)
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  }
+
+  next();
 })
 
 //세션 설정
@@ -45,15 +74,15 @@ app.use(
         resave: false,
         // request가 들어오면 해당 request에서 새로 생성된 session에 아무런 작업이 이루어지지 않은 상황 
         // false -> 아무런 작업이 이루워지지 않은 경우 저장 X
-        saveUninitialized: false,
+        saveUninitialized: true,
         store: mongoDBStore, //세션을 데이터베이스에 저장
         cookie: {
-            sameSite: "none",
-            secure: true,
-            // 모든 범위에서 이 쿠키 사용 가능 "/"
-            // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
-            path: "/",
-            maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
+          sameSite: "none",
+          secure: true,
+          // 모든 범위에서 이 쿠키 사용 가능 "/"
+          // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
+          path: "/",
+          maxAge: 1000 * 60 * 60 * 24 * 7 // 만료시간 One Week
         }
     }))
 
@@ -70,12 +99,14 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 app.use("/", userRoutes);
 
 /*
-app.use('/', require('./routes/user'));
-
+app.use("/user", (req : any, res : any) => {
+  res.send('hello');
+});
+*/
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
 });
-*/
+
 app.use(
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const error = new Error("Not Found")
