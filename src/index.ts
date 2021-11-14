@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from "cors";
+//import cors from "cors";
 import config from './config/config'; // 환경변수 가져옴
 import mongoose from 'mongoose';
 import passportModule from 'passport';
@@ -16,7 +16,8 @@ const mongoURL = config.mongoURL || "";
 export var db: any;
 // 몽구스 연결
 mongoose
-  .connect(mongoURL, {})
+  .connect(mongoURL,{ 
+  })
   .then(() => {
     console.log("connected MongoDB")
   })
@@ -36,7 +37,7 @@ MongoClient.connect( mongoURL, { useUnifiedTopology: true }, function (err: any,
 */
 
 //세션 저장을 위해 몽고db에 로그인
-const MongoDBStore = ConnectMongoDBSession(session)
+const MongoDBStore = ConnectMongoDBSession(session);
 const mongoDBStore = new MongoDBStore({
   uri: mongoURL,
   databaseName: '09bee',
@@ -51,7 +52,8 @@ mongoDBStore.on("error", () => {
 app.use((req: any, res: any, next: any) => {
   const corsWhitelist = [
     'https://localhost:8080',
-    'http://localhost:8081'
+    'http://localhost:8080',
+    '*'
   ]
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin)
@@ -71,7 +73,7 @@ app.use(
         resave: false,
         // request가 들어오면 해당 request에서 새로 생성된 session에 아무런 작업이 이루어지지 않은 상황 
         // false -> 아무런 작업이 이루워지지 않은 경우 저장 X
-        saveUninitialized: false,
+        saveUninitialized: true,
         store: mongoDBStore, //세션을 데이터베이스에 저장
         cookie: {
           sameSite: "none",
@@ -95,10 +97,11 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 
 // 라우터별로 실행 함수 지정
 app.use("/", userRoutes);
+/*
 app.use("/user", (req : any, res : any) => {
   res.send('hello');
 });
-
+*/
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
 });

@@ -8,6 +8,20 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy
 
 module.exports = function (app : any) {
 
+    //strategy에서 받은 정보들을 user에 입력
+    passport.serializeUser((user: any, done: any) => {
+        // console.log('serializeUser', user)
+        return done(null, user.id);
+    });
+
+    //serializeUser에서 분해한 user._id로부터 원래 user값들을 다시 바인딩
+    passport.deserializeUser((id: string, done: any) => {
+        // console.log('deserializeUser', id)
+        User.findById(id, (err: Error, doc: userType) => {
+            return done(null, doc);
+        })
+    });
+
     passport.use(new GoogleStrategy({
         clientID: config.googleID,
         clientSecret: config.googlePW,
@@ -53,19 +67,7 @@ module.exports = function (app : any) {
             })
         }))
 
-    //strategy에서 받은 정보들을 user에 입력
-    passport.serializeUser((user: any, done: any) => {
-        // console.log('serializeUser', user)
-        return done(null, user.id);
-    })
 
-    //serializeUser에서 분해한 user._id로부터 원래 user값들을 다시 바인딩
-    passport.deserializeUser((id: string, done: any) => {
-        // console.log('deserializeUser', id)
-        User.findById(id, (err: Error, doc: userType) => {
-        return done(null, doc);
-        })
-    })
 /*
         passport.serializeUser(function (user: any, done: any) {
             done(null, user);

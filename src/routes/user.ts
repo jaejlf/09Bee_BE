@@ -32,6 +32,7 @@ module.exports = function (passport : any) {
 
     //홈페이지(/)
     router.get('/', (req: any, res: any) => {
+        //console.log(req);
         if(req.user) console.log(req.user);
         else console.log('req x');
         if(res.user) console.log(res.user);
@@ -43,16 +44,17 @@ module.exports = function (passport : any) {
 
     router.get("/getuser", (req, res) => {
         res.send(req.user);
-    })
+    });
 
-    //로그아웃
-    router.get('/auth/logout', function (req: any, res: any) {
+    //로그 아웃
+    router.get('/auth/logout', function (req: any, res: any) {        
+        //console.log(req.session.cookie);
         req.logout();
         req.session.destroy(() => {
             res.clearCookie('connect.sid');
             res.send('logout done');
         });
-        res.redirect('/');
+        
     });
 
     //임시 페이지
