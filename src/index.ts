@@ -54,7 +54,8 @@ app.use((req: any, res: any, next: any) => {
   const corsWhitelist = [
     'https://localhost:8080',
     'http://localhost:8080',
-    '*'
+    '*',
+    'https://gonggoo-bee.herokuapp.com/'
   ]
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin)
