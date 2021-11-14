@@ -13,38 +13,28 @@ app.set("trust proxy", 1); // trust proxy 역방향 프록시 지원 활성화
 const mongoURL = config.mongoURL || "";
 
 export var db: any;
+
 // 몽구스 연결
 mongoose
-  .connect(mongoURL, {})
-  .then(() => {
-    console.log("connected MongoDB")
-  })
-  .catch((error) => {
-    console.log(error.message)
-  })
-/*
-const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect( mongoURL, { useUnifiedTopology: true }, function (err: any, client: any) {
-    if (err) {
-        console.log('Failed to connect to MongoDB', err);
-        return;
-    }
-    db = client.db('09bee');
-    console.log('connected to MongoDB');
-})
-*/
+    .connect(mongoURL, {})
+    .then(() => {
+        console.log("connected MongoDB")
+    })
+    .catch((error) => {
+        console.log(error.message)
+    })
 
 //세션 저장을 위해 몽고db에 로그인
 const MongoDBStore = ConnectMongoDBSession(session)
 const mongoDBStore = new MongoDBStore({
-  uri: mongoURL,
-  databaseName: '09bee',
-  collection: "sessions"
+    uri: mongoURL,
+    databaseName: '09bee',
+    collection: "sessions"
 })
 
 mongoDBStore.on("error", () => {
     // Error 처리
-  })
+})
 
 //세션 설정
 app.use(
@@ -58,14 +48,14 @@ app.use(
         saveUninitialized: false,
         store: mongoDBStore, //세션을 데이터베이스에 저장
         cookie: {
-        sameSite: "none",
-        secure: true,
-        // 모든 범위에서 이 쿠키 사용 가능 "/"
-        // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
-        path: "/",
-        maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
+            sameSite: "none",
+            secure: true,
+            // 모든 범위에서 이 쿠키 사용 가능 "/"
+            // default일 경우 쿠키가 생성된 해당 페이지에서만 가능
+            path: "/",
+            maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
         }
-    }))  
+    }))
 
 //passport 실행
 app.use(passportModule.initialize());
@@ -75,24 +65,27 @@ app.use(passportModule.session());
 var passport = require('./controllers/user')(app) // 받은 passport를 passort라는 변수에 저장
 var userRoutes = require('./routes/user')(passport) //import가 아닌 require 함수로 가져옴
 
-// app.use('/', require('./routes/user'));
 
 // 라우터별로 실행 함수 지정
 app.use("/", userRoutes);
+
 /*
+app.use('/', require('./routes/user'));
+
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
 });
 */
 app.use(
     (req: express.Request, res: express.Response, next: express.NextFunction) => {
-      const error = new Error("Not Found")
-      res.status(404).json({
-        message: error.message,
-      })
+        const error = new Error("Not Found")
+        res.status(404).json({
+            message: error.message,
+        })
     }
-  )
+)
 
-app.listen(8080, () => {
-    console.log('Started server with 8080');
+var port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log('Started server with ' + port);
 });
