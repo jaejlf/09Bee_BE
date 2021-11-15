@@ -43,8 +43,9 @@ app.use((req: any, res: any, next: any) => {
   const corsWhitelist = [
     'https://localhost:8080',
     'http://localhost:8080',
+    'https://gonggoo-bee.herokuapp.com/',
+    'https://frontend-d7zm62vth-1thefull-project.vercel.app/',
     '*',
-    'https://gonggoo-bee.herokuapp.com/'
   ]
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin)
@@ -86,13 +87,8 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 
 
 // 라우터별로 실행 함수 지정
-app.use("/", userRoutes);
+app.use("/user", userRoutes);
 
-/*
-app.use("/user", (req : any, res : any) => {
-  res.send('hello');
-});
-*/
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
 });

@@ -9,11 +9,11 @@ module.exports = function (passport : any) {
 
     //구글 로그인 후 홈페이지(/)로 이동
     router.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/auth/login', session : true }),
+        passport.authenticate('google', { failureRedirect: '/user/login', session : true }),
         function (req: any, res: any) {
             console.log('login success');
             console.log(req.user);
-            res.redirect('/');
+            res.redirect("https://frontend-d7zm62vth-1thefull-project.vercel.app/");
         });
 
     //홈페이지(/)
@@ -46,14 +46,14 @@ module.exports = function (passport : any) {
     const getPage = (user: userType) => {
         if (user !== undefined) {
             return `
-        <a href="/auth/logout">logout</a>
+        <a href="/user/auth/logout">logout</a>
         <h2>${user.name}님 환영합니다!</h2>
         <h3>로그인 이메일 : ${user.email} </h3>
         `;
         }
         else {
             return `
-        <a href="/auth/google">Google Login</a>
+        <a href="/user/auth/google">Google Login</a>
         `;
         }
     }
