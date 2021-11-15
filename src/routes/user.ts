@@ -54,7 +54,6 @@ module.exports = function (passport : any) {
         else {
             return `
         <a href="/auth/google">Google Login</a>
-        <a href="/auth/logout">logout</a>
         `;
         }
     }
