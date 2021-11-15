@@ -22,7 +22,7 @@ module.exports = function (app : any) {
     passport.use(new GoogleStrategy({
         clientID: config.googleID,
         clientSecret: config.googlePW,
-        callbackURL: "/auth/google/callback"
+        callbackURL: "/user/auth/google/callback"
     },
 
     function(accessToken : any, refreshToken : any, profile : any, cb : any) {        
