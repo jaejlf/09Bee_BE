@@ -25,17 +25,6 @@ mongoose
   .catch((error) => {
     console.log(error.message)
   })
-/*
-const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect( mongoURL, { useUnifiedTopology: true }, function (err: any, client: any) {
-    if (err) {
-        console.log('Failed to connect to MongoDB', err);
-        return;
-    }
-    db = client.db('09bee');
-    console.log('connected to MongoDB');
-})
-*/
 
 //세션 저장을 위해 몽고db에 로그인
 const MongoDBStore = ConnectMongoDBSession(session);
