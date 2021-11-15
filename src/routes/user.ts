@@ -32,7 +32,7 @@ module.exports = function (passport : any) {
         res.send(req.user);
     });
 
-    //로그 아웃
+    //로그아웃
     router.get('/auth/logout', function (req: any, res: any) {
         req.logout();
         // 쿠키 제거
