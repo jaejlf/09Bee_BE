@@ -11,11 +11,7 @@ const user = new mongoose.Schema({
     userId: {
         required: false,
         type: Number
-    },    
-    provider: {
-        required : false,
-        type : String
-    },
+    },  
     name: {
         required : false,
         type : String
@@ -27,7 +23,11 @@ const user = new mongoose.Schema({
     phone: {
         required : false,
         type : String
-    }
+    },
+    createdAt: {
+        required: false,
+        type: String
+    }    
 })
 
 // save전 현재 시간 출력

@@ -2,7 +2,6 @@
 export interface userType {
     googleId? : string,
     userId? : number,
-    provider: string,
     name: string,
     email: string,
     createdAt?: string,

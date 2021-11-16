@@ -36,7 +36,6 @@ module.exports = function (app : any) {
                     const newUser = new User({
                         userId : userId,
                         googleID : profile.id,
-                        provider: profile.provider,
                         name: profile.displayName,
                         email: profile.emails[0].value
                     })
