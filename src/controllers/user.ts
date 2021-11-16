@@ -9,7 +9,7 @@ module.exports = function (app : any) {
 
     //strategy에서 받은 정보들을 user에 입력
     passport.serializeUser((user: any, done: any) => {
-        return done(null, user.id);
+        return done(null, user._id);
     });
 
     //serializeUser에서 분해한 user._id로부터 원래 user값들을 다시 바인딩
@@ -34,6 +34,7 @@ module.exports = function (app : any) {
                     console.log('신규 유저');
                     const userId: any = await getNextSequence("userInfo");
                     const newUser = new User({
+                        userId : userId,
                         googleID : profile.id,
                         provider: profile.provider,
                         name: profile.displayName,

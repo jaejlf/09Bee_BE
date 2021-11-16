@@ -6,5 +6,7 @@ export interface userType {
     name: string,
     email: string,
     createdAt?: string,
-    phone?: string
+    phone?: string,
+    __v?: number,
+    _id?: string,
 }
