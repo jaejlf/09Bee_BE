@@ -22,7 +22,8 @@ module.exports = function (app : any) {
     passport.use(new GoogleStrategy({
         clientID: config.googleID,
         clientSecret: config.googlePW,
-        callbackURL: "/user/auth/google/callback"
+        callbackURL: "/user/auth/google/callback",
+        profileFields: ['id', 'displayName', 'email', 'thumbnail']
     },
 
     function(accessToken : any, refreshToken : any, profile : any, cb : any) {        
@@ -32,10 +33,10 @@ module.exports = function (app : any) {
                 // 새로운 유저
                 if (!doc) {
                     console.log('신규 유저');
-                    const userId: any = await getNextSequence("userInfo");
+                    const userId : any = await getNextSequence("userInfo");
                     const newUser = new User({
+                        googleId : profile.id,
                         userId : userId,
-                        googleID : profile.id,
                         name: profile.displayName,
                         email: profile.emails[0].value
                     })

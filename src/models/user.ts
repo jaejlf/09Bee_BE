@@ -33,7 +33,7 @@ const user = new mongoose.Schema({
 // save전 현재 시간 출력
 user.pre('save', function (this: userType) {
     this.createdAt = moment.nowDateTime();
-    console.log(this.createdAt)
+    console.log(this.createdAt);
 })
 
 export default mongoose.model("User", user);
