@@ -27,6 +27,7 @@ export default interface Item extends Document{
         registerNum : string, // 등록 번호
         companyName : string, // 상호명
         sellerName : string,  // 판매자 성명
+        address : string, // 소재지
         type : string, // 업태
         typeEvent : string // 종목
     },

@@ -27,6 +27,7 @@ const itemSchema: Schema = new Schema({
         registerNum : { type: String, required: true }, // 등록 번호
         companyName : { type: String, required: true }, // 상호명
         sellerName : { type: String, required: true },  // 판매자 성명
+        address : { type: String, required: true },  // 소재지
         type : { type: String, required: true }, // 업태
         typeEvent : { type: String, required: true } // 종목
     },
