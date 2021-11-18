@@ -4,6 +4,7 @@ import config from './config/config'; // 환경변수 가져옴
 import mongoose from 'mongoose';
 import passportModule from 'passport';
 import session from 'express-session';
+import itemRoutes from "./routes/item"
 import ConnectMongoDBSession from "connect-mongodb-session";
 
 const app = express();
@@ -88,6 +89,7 @@ var userRoutes = require('./routes/user')(passport) //import가 아닌 require �
 
 // 라우터별로 실행 함수 지정
 app.use("/user", userRoutes);
+app.use("/item", itemRoutes);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Hello');
