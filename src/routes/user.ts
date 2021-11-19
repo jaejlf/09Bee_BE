@@ -13,7 +13,8 @@ module.exports = function (passport : any) {
         function (req: any, res: any) {
             console.log('login success');
             console.log(req.user);
-            res.redirect("https://frontend-d7zm62vth-1thefull-project.vercel.app/");
+            //res.redirect("https://frontend-d7zm62vth-1thefull-project.vercel.app/");
+            res.redirect("https://frontend-cu8jbdk41-1thefull-project.vercel.app/");
         });
 
     //홈페이지(/)
