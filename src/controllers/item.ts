@@ -19,7 +19,9 @@ const getItem = async (req: Request, res: Response, next: NextFunction) => {
             "companyInfo": item?.companyInfo,
             "targetNum": item?.targetNum,
             "progress": item?.progress,
-            "notice": item?.notice
+            "notice": item?.notice,
+            "price" : item?.price,
+            "date" : item?.date
         }
         res.status(200).json({
             item: exportItem
