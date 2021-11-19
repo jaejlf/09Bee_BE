@@ -5,7 +5,7 @@ import passport from 'passport';
 import getNextSequence from './counter';
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-module.exports = function (app : any) {
+module.exports = function (app: any) {
 
     //strategy에서 받은 정보들을 user에 입력
     passport.serializeUser((user: any, done: any) => {
@@ -26,37 +26,42 @@ module.exports = function (app : any) {
         profileFields: ['id', 'displayName', 'email', 'thumbnail']
     },
 
-    function(accessToken : any, refreshToken : any, profile : any, cb : any) {        
-        User.findOne({ email: profile.emails[0].value }, async (err: Error, doc: userType) => {
-            if (err) return cb(err, null);
-            try {
-                // 새로운 유저
-                if (!doc) {
-                    console.log('신규 유저');
-                    const userId : any = await getNextSequence("userInfo");
-                    const newUser = new User({
-                        googleId : profile.id,
-                        userId : userId,
-                        name: profile.displayName,
-                        email: profile.emails[0].value
-                    })
-                    await newUser.save().then((savedUser : any) => {
-                    })
-                    .catch((err : any) => {
-                        console.log(err);
-                    })
-                    return cb(null, newUser);
-                }
-                // 기존 유저
-                else{ 
-                    console.log('기존 유저');
-                    return cb(null, doc);
-                }
+        function (accessToken: any, refreshToken: any, profile: any, cb: any) {
+            User.findOne({ email: profile.emails[0].value }, async (err: Error, doc: userType) => {
+                if (err) return cb(err, null);
+                try {
+                    // 새로운 유저
+                    if (!doc) {
+                        console.log('신규 유저');
+                        const userId: any = await getNextSequence("userInfo");
+                        const newUser = new User({
+                            googleId: profile.id,
+                            userId: userId,
+                            name: profile.displayName,
+                            email: profile.emails[0].value,
+                            deal: 14, //거래수
+                            follower: 83,
+                            following: 12,
+                            resentProduct: 13, //최근 참여한 상품
+                            ongoingProduct: 14 //나의 진행 상품
+                        })
+                        await newUser.save().then((savedUser: any) => {
+                        })
+                            .catch((err: any) => {
+                                console.log(err);
+                            })
+                        return cb(null, newUser);
+                    }
+                    // 기존 유저
+                    else {
+                        console.log('기존 유저');
+                        return cb(null, doc);
+                    }
 
-            } catch (error) {
-                console.log('error');
-                return cb(error);
-            }
+                } catch (error) {
+                    console.log('error');
+                    return cb(error);
+                }
             })
         }))
 
