@@ -36,8 +36,18 @@ export default interface Item extends Document{
         maxNum : number, // 최대 인원
         currentNum : number // 현재 인원
     },
-    progress : number, // 0 : 수요조사 진행 1 : 수요조사 마감, 2 : 공구 모집 진행, 3 : 공구 모집 마감, 4 : 주문 진행, 5 : 배송 시작
+    progress : number, // 0 : 수요조사 진행 1 : 수요조사 마감, 2 : 공구 모집 진행, 3 : 공구 모집 마감, 4 : 주문 진행, 5 : 배송 시작, 6: 배송 마감
     notice : [
         string // 공지사항
-    ]
+    ],
+    price : {
+        maxPrice : number, //최소 인원 달성 시
+        minPrice : number //최대 인원 달성 시
+    },
+    date : {
+        surveyStart : string, //수요조사 시작
+        surveyEnd : string, //수요조사 끝
+        recruitStart : string, //공구모집 시작
+        recruitEnd : string //공구모집 끝
+    }
 }

@@ -39,7 +39,17 @@ const itemSchema: Schema = new Schema({
     progress : { type: Number, required: true }, // 0 : 수요조사 진행 1 : 수요조사 마감, 2 : 공구 모집 진행, 3 : 공구 모집 마감, 4 : 주문 진행, 5 : 배송 시작
     notice : [
         { type: String, required: true } // 공지사항
-    ]
+    ],
+    price : {
+        maxPrice : {type : Number, required: true}, //최소 인원 달성 시
+        minPrice : {type : Number, required: true} //최대 인원 달성 시
+    },
+    date : {
+        surveyStart : {type : String, required: true}, //수요조사 시작
+        surveyEnd : {type : String, required: true}, //수요조사 끝
+        recruitStart : {type : String, required: true}, //공구모집 시작
+        recruitEnd : {type : String, required: true} //공구모집 끝
+    }
 })
 
 export default mongoose.model<Item>("Item", itemSchema)
