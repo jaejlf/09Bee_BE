@@ -11,23 +11,43 @@ const user = new mongoose.Schema({
     userId: {
         required: false,
         type: Number
-    },  
+    },
     name: {
-        required : false,
-        type : String
+        required: false,
+        type: String
     },
     email: {
-        required : false,
-        type : String
+        required: false,
+        type: String
     },
     phone: {
-        required : false,
-        type : String
+        required: false,
+        type: String
     },
     createdAt: {
         required: false,
         type: String
-    }    
+    },
+    deal: {
+        required: false,
+        type: Number
+    },
+    follower: {
+        required: false,
+        type: Number
+    },
+    following: {
+        required: false,
+        type: Number
+    },
+    resentProduct: [{
+        required: false,
+        type: Number
+    }],
+    ongoingProduct: [{
+        required: false,
+        type: Number
+    }]
 })
 
 // save전 현재 시간 출력

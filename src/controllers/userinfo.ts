@@ -6,7 +6,7 @@ const userFindOne = async (id: number) => {
         return await user.findOne(
             { userId: id });
     }
-    catch (error : any) {
+    catch (error: any) {
         console.log("userFindOne" + error.message);
     }
 };
@@ -19,12 +19,12 @@ const userFindUpdate = async (id: number, param: any) => {
             { $set: param },
             { new: true })
     }
-    catch (error : any) {
+    catch (error: any) {
         console.log("userFindUpdate" + error.message);
     }
 };
 
-export default{
-        userFindOne,
-        userFindUpdate
-    };
+export default {
+    userFindOne,
+    userFindUpdate
+};
