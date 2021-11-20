@@ -12,5 +12,6 @@ export interface userType {
     follower?: number,
     following?: number,
     resentProduct?: number, //최근 참여한 상품
-    ongoingProduct?: number //나의 진행 상품
+    ongoingProduct?: number, //나의 진행 상품
+    address?: string //기본 배송지
 }

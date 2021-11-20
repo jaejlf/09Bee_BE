@@ -47,7 +47,11 @@ const user = new mongoose.Schema({
     ongoingProduct: [{
         required: false,
         type: Number
-    }]
+    }],
+    address: {
+        required: false,
+        type: String
+    }
 })
 
 // save전 현재 시간 출력
