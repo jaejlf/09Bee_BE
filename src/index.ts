@@ -43,9 +43,10 @@ mongoDBStore.on("error", () => {
 app.use((req: any, res: any, next: any) => {
   const corsWhitelist = [
     'https://localhost:8080',
+    'https://localhost:3000',
     'http://localhost:8080',
     'https://gonggoo-bee.herokuapp.com/',
-    'https://frontend-d7zm62vth-1thefull-project.vercel.app/',
+    'https://frontend-nine-black.vercel.app/',
     '*',
   ]
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
