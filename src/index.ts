@@ -39,6 +39,10 @@ mongoDBStore.on("error", () => {
   // Error 처리
 })
 
+var cors = require('cors');
+app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+
 // cors 지정
 app.use((req: any, res: any, next: any) => {
   const corsWhitelist = [
@@ -52,7 +56,9 @@ app.use((req: any, res: any, next: any) => {
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
     res.header('Access-Control-Allow-Origin', req.headers.origin)
     res.header('Access-Control-Allow-Credentials', true)
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token')
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', "GET, POST, OPTION, PUT, PATCH, DELETE");
   }
 
   next();
