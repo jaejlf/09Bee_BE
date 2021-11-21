@@ -111,7 +111,7 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-// 프로그레스 변경 시
+// 프로그레스(진행 과정) 변경 시
 const changeProgress = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const progressId = parseInt(req.params.progressId);
