@@ -18,12 +18,6 @@ module.exports = function (passport : any) {
 
     //홈페이지(/)
     router.get('/', (req: any, res: any) => {
-        /*
-        if(req.user) console.log(req.user);
-        else console.log('req x');
-        if(res.user) console.log(res.user);
-        else console.log('res x')
-        */
         const temp = getPage(req.user);
         res.send(temp);
     });
