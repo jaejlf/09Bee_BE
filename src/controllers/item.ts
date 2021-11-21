@@ -71,7 +71,7 @@ const itemFindUpdateInc = async (id: number, param: any) => {
     }
 }
 
-// 더비 공구 신청시
+// 더비 공구 신청 시
 const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -105,7 +105,7 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-// 더비 공구 신청시
+// 프로그레스 변경 시
 const changeProgress = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const progressId = parseInt(req.params.progressId);
