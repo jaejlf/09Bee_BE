@@ -71,6 +71,7 @@ const itemFindUpdateInc = async (id: number, param: any) => {
     }
 }
 
+// 더비 공구 신청시
 const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -104,7 +105,34 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+// 더비 공구 신청시
+const changeProgress = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const progressId = parseInt(req.params.progressId);
+        const itemId: any = req.query.itemId;
+        const foundItemInfo: any = await itemFindOne(itemId); // 아이템 api 데이터 가져옴
+        if (foundItemInfo === null || foundItemInfo === undefined) {
+            res.status(501).json({
+                error: "해당 itemId에 맞는 item이 없습니다."
+            })
+        } else{ 
+            // db에 업데이트
+            await itemFindUpdateSet( itemId, { progress: progressId });           
+
+            res.status(200).json({
+                progress: progressId
+            })
+        }    
+    }
+    catch (error : any) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 export default {
     getItem,
-    dobbyIn
+    dobbyIn,
+    changeProgress
 };

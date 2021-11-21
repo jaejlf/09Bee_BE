@@ -45,9 +45,9 @@ export default interface Item extends Document{
         minPrice : number //최대 인원 달성 시 가격
     },
     date : {
-        surveyStart : string, //수요조사 시작
-        surveyEnd : string, //수요조사 끝
-        recruitStart : string, //공구모집 시작
-        recruitEnd : string //공구모집 끝
+        surveyStart : string, //수요조사 시작 날짜
+        surveyEnd : string, //수요조사 끝 날짜
+        recruitStart : string, //공구모집 시작 날짜
+        recruitEnd : string //공구모집 끝 날짜
     }
 }
