@@ -71,7 +71,7 @@ const itemFindUpdateInc = async (id: number, param: any) => {
     }
 }
 
-// 더비 공구 신청시
+// 더비 공구 신청 시
 const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -89,7 +89,7 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
             await itemFindUpdateSet( itemId, { dobbyIDs : dobbyIDs });
 
             // currentNum ++시키기
-            await itemFindUpdateInc( itemId, { "targetNum.currentNum" : 1 });            
+            await itemFindUpdateInc( itemId, { "targetNum.currentNum" : 1 });          
 
             // 모집 인원 달성 시 && 알람 비어 있을 시 충족 멘트 lobbyAlarm에 추가
             if(foundItemInfo.targetNum.minNum <= foundItemInfo.targetNum.currentNum && foundItemInfo.lobbyAlarm.length === 0){
@@ -145,8 +145,36 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
     }
 }
 
+// 공지사항 작성
+const makeNotice = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        let { itemId, notice } = req.body;
+        const foundItemInfo: any = await itemFindOne(itemId); // 아이템 api 데이터 가져옴
+        if (foundItemInfo === null || foundItemInfo === undefined) {
+            res.status(501).json({
+                message: "해당 itemId에 맞는 item이 없습니다."
+            })
+        } else {
+                const notices: Array<string> = foundItemInfo.notice; // 업데이트할 배열 선언
+                // notice 배열 뒤에 새 공지사항 붙이기
+                notices.push(notice);
+                // db에 업데이트
+                await itemFindUpdateSet( itemId, { notice: notices });
+                res.status(200).json({
+                    result: "공지사항 등록 완료"
+                })
+            }
+        }    
+    catch (error : any) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 export default {
     getItem,
     dobbyIn,
-    changeProgress
+    changeProgress,
+    makeNotice
 };
