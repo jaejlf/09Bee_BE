@@ -34,6 +34,22 @@ const getItem = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+// 전체 item 리턴
+const getAllItem = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const allItems = await Item.find({})
+        res.status(200).json({
+            itemInfo: allItems
+        })
+
+    }
+    catch (error: any) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 // itemId로 item정보 찾기
 const itemFindOne = async (id: number) => {
     try {
@@ -116,12 +132,12 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
 const getDobbyList = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const itemId = parseInt(req.params.itemId);
-        const item = await Item.findOne({ itemId: itemId }); 
-        const exportList = {
+        const item = await Item.findOne({ itemId: itemId });
+        const exportDobbys = {
             "dobbyIDs": item?.dobbyIDs
         }
         res.status(200).json(
-            exportList
+            exportDobbys
         )
     }
     catch (error: any) {
@@ -178,6 +194,7 @@ const makeNotice = async (req: Request, res: Response, next: NextFunction) => {
             const notices: Array<string> = foundItemInfo.notice; // 업데이트할 배열 선언
             // notice 배열 뒤에 새 공지사항 붙이기
             notices.push(notice);
+
             // db에 업데이트
             await itemFindUpdateSet(itemId, { notice: notices });
 
@@ -204,5 +221,6 @@ export default {
     dobbyIn,
     changeProgress,
     makeNotice,
-    getDobbyList
+    getDobbyList,
+    getAllItem
 };
