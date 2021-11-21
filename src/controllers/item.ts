@@ -86,12 +86,18 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
             // dobbyIDs 배열 뒤에 userId붙이기
             dobbyIDs.push(userId);
             // db에 업데이트
-            await itemFindUpdateSet( itemId, { dobbyIDs: dobbyIDs });
+            await itemFindUpdateSet( itemId, { dobbyIDs : dobbyIDs });
 
             // currentNum ++시키기
             await itemFindUpdateInc( itemId, { "targetNum.currentNum" : 1 });            
 
-            // to do : 모집 인원 달성 시 lobbyAlarm에 추가
+            // 모집 인원 달성 시 && 알람 비어 있을 시 충족 멘트 lobbyAlarm에 추가
+            if(foundItemInfo.targetNum.minNum <= foundItemInfo.targetNum.currentNum && foundItemInfo.lobbyAlarm.length === 0){
+                const lobbyAlarms: Array<string> = foundItemInfo.lobbyAlarm; // 업데이트할 배열 선언
+                const addAlarm : string = "진행 중인 '" + foundItemInfo.title + "'의 공구모집 최소 인원이 충족되었습니다. 주문을 진행해보세요!";
+                lobbyAlarms.push(addAlarm);
+                await itemFindUpdateSet( itemId, { lobbyAlarm : lobbyAlarms });                
+            }
 
             res.status(200).json({
                 result: true
@@ -105,7 +111,7 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-// 더비 공구 신청시
+// 프로그레스 변경 시
 const changeProgress = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const progressId = parseInt(req.params.progressId);
@@ -117,7 +123,7 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
             })
         } else{ 
             // db에 업데이트
-            await itemFindUpdateSet( itemId, { progress: progressId });           
+            await itemFindUpdateSet( itemId, { progress : progressId });           
 
             res.status(200).json({
                 progress: progressId
