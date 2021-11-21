@@ -45,7 +45,7 @@ const itemFindOne = async (id: number) => {
     }
 }
 
-// item update
+// item update (Set)
 const itemFindUpdateSet = async (id: number, param: any) => {
     try {
         return await Item.findOneAndUpdate(
@@ -58,7 +58,7 @@ const itemFindUpdateSet = async (id: number, param: any) => {
     }
 }
 
-// item update
+// item update (Inc)
 const itemFindUpdateInc = async (id: number, param: any) => {
     try {
         return await Item.findOneAndUpdate(
