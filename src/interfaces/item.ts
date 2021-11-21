@@ -41,8 +41,8 @@ export default interface Item extends Document{
         string // 공지사항
     ],
     price : {
-        maxPrice : number, //최소 인원 달성 시
-        minPrice : number //최대 인원 달성 시
+        maxPrice : number, //최소 인원 달성 시 가격
+        minPrice : number //최대 인원 달성 시 가격
     },
     date : {
         surveyStart : string, //수요조사 시작
