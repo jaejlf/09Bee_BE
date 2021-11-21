@@ -160,6 +160,13 @@ const makeNotice = async (req : Request, res : Response, next : NextFunction) =>
                 notices.push(notice);
                 // db에 업데이트
                 await itemFindUpdateSet( itemId, { notice: notices });
+
+                // 공지사항 작성 시 더비에게 알람
+                const dobbyAlarms: Array<string> = foundItemInfo.dobbyAlarm; // 업데이트할 배열 선언
+                const addAlarm : string = "참여 중인 '" + foundItemInfo.title + "'의 새로운 공지사항이 업로드되었습니다. 공지사항을 확인해보세요!";
+                dobbyAlarms.push(addAlarm);
+                await itemFindUpdateSet( itemId, { dobbyAlarm : dobbyAlarms });                              
+
                 res.status(200).json({
                     result: "공지사항 등록 완료"
                 })
