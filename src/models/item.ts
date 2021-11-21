@@ -18,6 +18,8 @@ const itemSchema: Schema = new Schema({
     deleteYN : { type: Boolean, required: true }, // 메인 페이지 삭제 여부,
     lobbyID : { type: Number, required: true }, // 총대 id
     dobbyIDs : [ { type: Number, required: true } ], // 총원들 id
+    lobbyAlarm : [ { type: String, required: true } ], // 러비에게 가는 알람
+    dobbyAlarm : [ { type: String, required: true } ], // 더비에게 가는 알람
     // 글 내용
     content : [{
         img : { type: String, required: true }, // img url

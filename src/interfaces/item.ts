@@ -18,6 +18,8 @@ export default interface Item extends Document{
     deleteYN? : boolean, // 메인 페이지 삭제 여부,
     lobbyID : number, // 총대 id
     dobbyIDs : [ number ], // 총원들 id
+    lobbyAlarm : [ string ], // 러비에게 가는 알람
+    dobbyAlarm : [ string ], // 더비에게 가는 알람
     // 글 내용
     content : [{
         img? : string, // img url
