@@ -23,9 +23,9 @@ const getItem = async (req: Request, res: Response, next: NextFunction) => {
             "price" : item?.price,
             "date" : item?.date
         }
-        res.status(200).json({
-            item: exportItem
-        })        
+        res.status(200).json(
+            exportItem
+        )        
     }
     catch (error : any) {
         res.status(500).json({
