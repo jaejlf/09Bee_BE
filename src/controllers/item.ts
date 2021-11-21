@@ -123,7 +123,15 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
             })
         } else{ 
             // db에 업데이트
-            await itemFindUpdateSet( itemId, { progress : progressId });           
+            await itemFindUpdateSet( itemId, { progress : progressId });          
+            
+            // 공구 모집 마감 시 더비에게 알람
+            if(progressId === 3){
+                const dobbyAlarms: Array<string> = foundItemInfo.dobbyAlarm; // 업데이트할 배열 선언
+                const addAlarm : string = "참여 중인 '" + foundItemInfo.title + "'의 공구모집 공구 모집이 종료되었습니다. 확인해보세요";
+                dobbyAlarms.push(addAlarm);
+                await itemFindUpdateSet( itemId, { dobbyAlarm : dobbyAlarms });  
+            }
 
             res.status(200).json({
                 progress: progressId
