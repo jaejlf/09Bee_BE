@@ -51,5 +51,11 @@ export default interface Item extends Document{
         surveyEnd : string, //수요조사 끝 날짜
         recruitStart : string, //공구모집 시작 날짜
         recruitEnd : string //공구모집 끝 날짜
-    }
+    },
+    formData :[{
+        color : string, //색상
+        size : string, //사이즈
+        ea : string, //개수
+        userId : number //폼 제출한 userID
+    }]
 }

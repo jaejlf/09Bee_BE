@@ -51,7 +51,13 @@ const itemSchema: Schema = new Schema({
         surveyEnd : {type : String, required: true}, //수요조사 끝
         recruitStart : {type : String, required: true}, //공구모집 시작
         recruitEnd : {type : String, required: true} //공구모집 끝
-    }
+    },
+    formData :[{
+        color : {type : String, required: true}, //색상
+        size : {type : String, required: true}, //사이즈
+        ea : {type : String, required: true}, //개수
+        userId : {type : Number, required: true} //폼 제출한 userID
+    }]
 })
 
 export default mongoose.model<Item>("Item", itemSchema)
