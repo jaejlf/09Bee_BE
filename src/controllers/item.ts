@@ -98,13 +98,11 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
         const foundUserInfo : any = await userController.userFindOne(userId); // 유저 api 데이터 가져옴
 
         if (foundItemInfo === null || foundItemInfo === undefined) {
-            console.log('errr')
             res.status(501).json({
                 error: "해당 itemId에 맞는 item이 없습니다."
             })
         }        
         else if (foundUserInfo === null || foundUserInfo === undefined) {
-            console.log('errrrr')
             res.status(502).json({
                 error: "해당 userId에 맞는 user가 없습니다."
             })
@@ -163,7 +161,10 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
     try {
         const progressId = parseInt(req.params.progressId);
         const itemId: any = req.query.itemId;
+
         const foundItemInfo: any = await itemFindOne(itemId); // 아이템 api 데이터 가져옴
+        const dobbyList : Array<number> = foundItemInfo.dobbyIDs; // 더비들 id를 배열로 선언
+
         if (foundItemInfo === null || foundItemInfo === undefined) {
             res.status(501).json({
                 error: "해당 itemId에 맞는 item이 없습니다."
@@ -174,12 +175,26 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
 
             // 공구 모집 마감 시 더비에게 알람
             if (progressId === 3) {
-                const dobbyAlarms: Array<string> = foundItemInfo.dobbyAlarm; // 업데이트할 배열 선언
-                const addAlarm: string = "참여 중인 '" + foundItemInfo.title + "'의 공구모집 공구 모집이 종료되었습니다. 확인해보세요";
-                dobbyAlarms.push(addAlarm);
-                await itemFindUpdateSet(itemId, { dobbyAlarm: dobbyAlarms });
+                // 더비 리스트를 한바퀴 돌면서 각각의 userDB에 알람 채워줌
+                dobbyList.forEach(async function(userId : number){
+                    const foundUserInfo : any = await userController.userFindOne(userId); // 유저 api 데이터 가져옴
+                    if (foundUserInfo === null || foundUserInfo === undefined) {
+                        res.status(502).json({
+                            error: "해당 userId에 맞는 user가 없습니다."
+                        })
+                    }
+                    else{
+                        const dobbyAlarms: Array<object> = foundUserInfo.dobbyAlarm; // 업데이트할 배열 선언
+                        const addAlarm: string = "참여 중인 '" + foundItemInfo.title + "'의 공구모집 공구 모집이 종료되었습니다. 확인해보세요";
+                        const addObject : object = {
+                            itemId : itemId,
+                            content : addAlarm
+                        }; 
+                        dobbyAlarms.push(addObject);
+                        userController.userFindUpdate(userId, { dobbyAlarm: dobbyAlarms });
+                    }
+                });
             }
-
             res.status(200).json({
                 progress: progressId
             })
