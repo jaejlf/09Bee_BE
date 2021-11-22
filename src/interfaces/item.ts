@@ -53,7 +53,7 @@ export default interface Item extends Document{
     formData :[{
         color : string, //색상
         size : string, //사이즈
-        ea : string, //개수
+        ea : number, //개수
         userId : number //폼 제출한 userID
     }]
 }

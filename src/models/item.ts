@@ -53,7 +53,7 @@ const itemSchema: Schema = new Schema({
     formData :[{
         color : {type : String, required: true}, //색상
         size : {type : String, required: true}, //사이즈
-        ea : {type : String, required: true}, //개수
+        ea : {type : Number, required: true}, //개수
         userId : {type : Number, required: true} //폼 제출한 userID
     }]
 })
