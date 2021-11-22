@@ -39,7 +39,7 @@ module.exports = function (app: any) {
                             userId: userId,
                             name: profile.displayName,
                             email: profile.emails[0].value,
-                            deal: 14, //거래수
+                            deal: 10, //거래수
                             follower: 83,
                             following: 12,
                             resentProduct: 13, //최근 참여한 상품
