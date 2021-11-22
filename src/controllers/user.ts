@@ -39,14 +39,15 @@ module.exports = function (app: any) {
                             userId: userId,
                             name: profile.displayName,
                             email: profile.emails[0].value,
+                            phone: "010-9876-5432",
                             deal: 10, //거래수
                             follower: 83,
                             following: 12,
                             resentProduct: 13, //최근 참여한 상품
-                            ongoingProduct: 14, //나의 진행 상품
+                            ongoingProduct: [14, 15], //나의 진행 상품
                             address: "서울특별시 공동구 구매로 21길 9-20호",
-                            lobbyAlarm : [],
-                            dobbyAlarm : []
+                            lobbyAlarm: [],
+                            dobbyAlarm: []
                         })
                         await newUser.save().then((savedUser: any) => {
                         })
