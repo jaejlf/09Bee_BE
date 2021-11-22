@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Item from "../models/item";
+import userController from "./userinfo"; // 유저 관련 함수 사용하기 위해 호출
 
 const getItem = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -92,30 +93,40 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = parseInt(req.params.userId);
         const itemId: any = req.query.itemId;
-        const foundItemInfo: any = await itemFindOne(itemId); // 아이템 api 데이터 가져옴
+
+        const foundItemInfo : any = await itemFindOne(itemId); // 아이템 api 데이터 가져옴
+        const foundUserInfo : any = await userController.userFindOne(userId); // 유저 api 데이터 가져옴
+
         if (foundItemInfo === null || foundItemInfo === undefined) {
+            console.log('errr')
             res.status(501).json({
                 error: "해당 itemId에 맞는 item이 없습니다."
             })
-        } else if (foundItemInfo.targetNum.currentNum < foundItemInfo.targetNum.maxNum) { // 현재 인원 < 최대인원일시 배열에 추가하여 update
+        }        
+        else if (foundUserInfo === null || foundUserInfo === undefined) {
+            console.log('errrrr')
+            res.status(502).json({
+                error: "해당 userId에 맞는 user가 없습니다."
+            })
+        }        
+        else if (foundItemInfo.targetNum.currentNum < foundItemInfo.targetNum.maxNum) { // 현재 인원 < 최대인원일시 배열에 추가하여 update
             const dobbyIDs: Array<number> = foundItemInfo.dobbyIDs; // 업데이트할 배열 선언
-            // dobbyIDs 배열 뒤에 userId붙이기
-            dobbyIDs.push(userId);
 
-            // db에 업데이트
-            await itemFindUpdateSet(itemId, { dobbyIDs: dobbyIDs });
-
-            // currentNum ++시키기
-            await itemFindUpdateInc(itemId, { "targetNum.currentNum": 1 });
+            dobbyIDs.push(userId); // dobbyIDs 배열 뒤에 userId붙이기            
+            await itemFindUpdateSet(itemId, { dobbyIDs: dobbyIDs }); // db에 업데이트            
+            await itemFindUpdateInc(itemId, { "targetNum.currentNum": 1 }); // currentNum ++시키기
 
             // 모집 인원 달성 시 && 알람 비어 있을 시 충족 멘트 lobbyAlarm에 추가
-            if (foundItemInfo.targetNum.minNum <= foundItemInfo.targetNum.currentNum && foundItemInfo.lobbyAlarm.length === 0) {
-                const lobbyAlarms: Array<string> = foundItemInfo.lobbyAlarm; // 업데이트할 배열 선언
-                const addAlarm: string = "진행 중인 '" + foundItemInfo.title + "'의 공구모집 최소 인원이 충족되었습니다. 주문을 진행해보세요!";
-                lobbyAlarms.push(addAlarm);
-                await itemFindUpdateSet(itemId, { lobbyAlarm: lobbyAlarms });
+            if (foundItemInfo.targetNum.minNum <= foundItemInfo.targetNum.currentNum && foundUserInfo.lobbyAlarm.length === 0) {
+                const lobbyAlarms: Array<object> = foundUserInfo.lobbyAlarm; // 업데이트할 배열 선언
+                const addAlarm : string = "진행 중인 '" + foundItemInfo.title + "'의 공구모집 최소 인원이 충족되었습니다. 주문을 진행해보세요!";
+                const addObject : object = {
+                    itemId : itemId,
+                    content : addAlarm
+                };                
+                lobbyAlarms.push(addObject);                
+                await userController.userFindUpdate(userId, { lobbyAlarm: lobbyAlarms }); // 유저 db 알람에 추가
             }
-
             res.status(200).json({
                 result: true
             })
