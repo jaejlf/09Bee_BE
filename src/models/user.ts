@@ -52,14 +52,14 @@ const user = new mongoose.Schema({
         required: false,
         type: String
     },
-    lobbyAlarm : [{
-        itemId : { type: Number, required: false }, 
-        content : { type: String, required: false }
+    lobbyAlarm: [{
+        itemId: { type: Number, required: false },
+        content: { type: String, required: false }
     }],
-    dobbyAlarm : [{
-        itemId : { type: Number, required: false }, 
-        content : { type: String, required: false }
-    }]    
+    dobbyAlarm: [{
+        itemId: { type: Number, required: false },
+        content: { type: String, required: false }
+    }]
 })
 
 // save전 현재 시간 출력

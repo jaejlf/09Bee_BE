@@ -1,5 +1,4 @@
 import express from 'express';
-//import cors from "cors";
 import config from './config/config'; // 환경변수 가져옴
 import mongoose from 'mongoose';
 import passportModule from 'passport';

@@ -2,55 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import Item from "../models/item";
 import userController from "./userinfo"; // 유저 관련 함수 사용하기 위해 호출
 
-const getItem = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const itemId = parseInt(req.params.itemId);
-        const item = await Item.findOne({ itemId: itemId });
-        const exportItem = {
-            "itemId": item?.itemId,
-            "title": item?.title,
-            "headImg": item?.headImg,
-            "tag": item?.tag,
-            "isMain": item?.isMain,
-            "preSearch": item?.preSearch,
-            "deleteYN": item?.deleteYN,
-            "lobbyID": item?.lobbyID,
-            "dobbyIDs": item?.dobbyIDs,
-            "content": item?.content,
-            "companyInfo": item?.companyInfo,
-            "targetNum": item?.targetNum,
-            "progress": item?.progress,
-            "notice": item?.notice,
-            "price": item?.price,
-            "date": item?.date
-        }
-        res.status(200).json(
-            exportItem
-        )
-    }
-    catch (error: any) {
-        res.status(500).json({
-            error: error.message
-        })
-    }
-}
-
-// 전체 item 리턴
-const getAllItem = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const allItems = await Item.find({})
-        res.status(200).json({
-            itemInfo: allItems
-        })
-
-    }
-    catch (error: any) {
-        res.status(500).json({
-            error: error.message
-        })
-    }
-}
-
 // itemId로 item정보 찾기
 const itemFindOne = async (id: number) => {
     try {
@@ -85,6 +36,57 @@ const itemFindUpdateInc = async (id: number, param: any) => {
     }
     catch (error: any) {
         console.log("itemFindUpdate" + error.message)
+    }
+}
+
+// item 정보 가져오기
+const getItem = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const itemId = parseInt(req.params.itemId);
+        const item = await itemFindOne(itemId);
+        const exportItem = {
+            "itemId": item?.itemId,
+            "title": item?.title,
+            "headImg": item?.headImg,
+            "tag": item?.tag,
+            "isMain": item?.isMain,
+            "preSearch": item?.preSearch,
+            "deleteYN": item?.deleteYN,
+            "lobbyID": item?.lobbyID,
+            "dobbyIDs": item?.dobbyIDs,
+            "content": item?.content,
+            "companyInfo": item?.companyInfo,
+            "targetNum": item?.targetNum,
+            "progress": item?.progress,
+            "notice": item?.notice,
+            "price": item?.price,
+            "date": item?.date,
+            "formData": item?.formData
+        }
+        res.status(200).json(
+            exportItem
+        )
+    }
+    catch (error: any) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+// 전체 item 리턴
+const getAllItem = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const allItems = await Item.find({})
+        res.status(200).json({
+            itemInfo: allItems
+        })
+
+    }
+    catch (error: any) {
+        res.status(500).json({
+            error: error.message
+        })
     }
 }
 

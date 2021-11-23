@@ -10,51 +10,51 @@ const itemSchema: Schema = new Schema({
     ],
     isMain: { type: Boolean, required: true },
     // 수요조사 양식 관련 추가 필요
-    preSearch : {
-        isHide : { type: Boolean, required: true }, // 공개 여부
-        date : { type: String, required: true } // 일정 xx월xx일까지 이런식으로 string으로 작성
+    preSearch: {
+        isHide: { type: Boolean, required: true }, // 공개 여부
+        date: { type: String, required: true } // 일정 xx월xx일까지 이런식으로 string으로 작성
     },
 
-    deleteYN : { type: Boolean, required: true }, // 메인 페이지 삭제 여부,
-    lobbyID : { type: Number, required: true }, // 총대 id
-    dobbyIDs : [ { type: Number, required: true } ], // 총원들 id
+    deleteYN: { type: Boolean, required: true }, // 메인 페이지 삭제 여부,
+    lobbyID: { type: Number, required: true }, // 총대 id
+    dobbyIDs: [{ type: Number, required: true }], // 총원들 id
     // 글 내용
-    content : [{
-        img : { type: String, required: true }, // img url
-        text : { type: String, required: true } // 내용
+    content: [{
+        img: { type: String, required: true }, // img url
+        text: { type: String, required: true } // 내용
     }],
-    companyInfo : {
-        registerNum : { type: String, required: true }, // 등록 번호
-        companyName : { type: String, required: true }, // 상호명
-        sellerName : { type: String, required: true },  // 판매자 성명
-        address : { type: String, required: true },  // 소재지
-        type : { type: String, required: true }, // 업태
-        typeEvent : { type: String, required: true } // 종목
+    companyInfo: {
+        registerNum: { type: String, required: true }, // 등록 번호
+        companyName: { type: String, required: true }, // 상호명
+        sellerName: { type: String, required: true },  // 판매자 성명
+        address: { type: String, required: true },  // 소재지
+        type: { type: String, required: true }, // 업태
+        typeEvent: { type: String, required: true } // 종목
     },
-    targetNum : {
-        minNum : { type: Number, required: true }, // 최소 인원
-        maxNum : { type: Number, required: true }, // 최대 인원
-        currentNum : { type: Number, required: true } // 현재 인원
+    targetNum: {
+        minNum: { type: Number, required: true }, // 최소 인원
+        maxNum: { type: Number, required: true }, // 최대 인원
+        currentNum: { type: Number, required: true } // 현재 인원
     },
-    progress : { type: Number, required: true }, // 0 : 수요조사 진행 1 : 수요조사 마감, 2 : 공구 모집 진행, 3 : 공구 모집 마감, 4 : 주문 진행, 5 : 배송 시작
-    notice : [
+    progress: { type: Number, required: true }, // 0 : 수요조사 진행 1 : 수요조사 마감, 2 : 공구 모집 진행, 3 : 공구 모집 마감, 4 : 주문 진행, 5 : 배송 시작
+    notice: [
         { type: String, required: true } // 공지사항
     ],
-    price : {
-        maxPrice : {type : Number, required: true}, //최소 인원 달성 시
-        minPrice : {type : Number, required: true} //최대 인원 달성 시
+    price: {
+        maxPrice: { type: Number, required: true }, //최소 인원 달성 시
+        minPrice: { type: Number, required: true } //최대 인원 달성 시
     },
-    date : {
-        surveyStart : {type : String, required: true}, //수요조사 시작
-        surveyEnd : {type : String, required: true}, //수요조사 끝
-        recruitStart : {type : String, required: true}, //공구모집 시작
-        recruitEnd : {type : String, required: true} //공구모집 끝
+    date: {
+        surveyStart: { type: String, required: true }, //수요조사 시작
+        surveyEnd: { type: String, required: true }, //수요조사 끝
+        recruitStart: { type: String, required: true }, //공구모집 시작
+        recruitEnd: { type: String, required: true } //공구모집 끝
     },
-    formData :[{
-        color : {type : String, required: true}, //색상
-        size : {type : String, required: true}, //사이즈
-        ea : {type : Number, required: true}, //개수
-        userId : {type : Number, required: true} //폼 제출한 userID
+    formData: [{
+        color: { type: String, required: true }, //색상
+        size: { type: String, required: true }, //사이즈
+        ea: { type: Number, required: true }, //개수
+        userId: { type: Number, required: true } //폼 제출한 userID
     }]
 })
 

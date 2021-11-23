@@ -14,12 +14,12 @@ export interface userType {
     resentProduct?: number, //최근 참여한 상품
     ongoingProduct?: number, //나의 진행 상품
     address?: string, //기본 배송지
-    lobbyAlarm? : [{
-        itemId : number, // 해당 알림 itemId
-        content : string // 알림 내용
+    lobbyAlarm?: [{
+        itemId: number, // 해당 알림 itemId
+        content: string // 알림 내용
     }],
-    dobbyAlarm? : [{
-        itemId : number, // 해당 알림 itemId
-        content : string // 알림 내용
+    dobbyAlarm?: [{
+        itemId: number, // 해당 알림 itemId
+        content: string // 알림 내용
     }]
 }

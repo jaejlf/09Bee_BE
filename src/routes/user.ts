@@ -2,14 +2,14 @@ import express from "express";
 import { userType } from '../interfaces/user';
 var router = express.Router();
 
-module.exports = function (passport : any) {
+module.exports = function (passport: any) {
     //구글 로그인을 위해 /google로 이동
     router.get('/auth/google',
         passport.authenticate('google', { scope: ['email', 'profile'] }));
 
     //구글 로그인 후 홈페이지(/)로 이동
     router.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/user/login', session : true }),
+        passport.authenticate('google', { failureRedirect: '/user/login', session: true }),
         function (req: any, res: any) {
             console.log('login success');
             console.log(req.user);

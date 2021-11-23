@@ -11,7 +11,7 @@ export default async function getNextSequence(id: string) {
             console.log(result.seq);
             return result.seq;
         }
-    } catch (error : any) {
+    } catch (error: any) {
         console.log("getNextSequence" + error.message);
         return error.message;
     }

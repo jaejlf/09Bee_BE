@@ -1,4 +1,4 @@
-import User from '../models/user'
+import User from '../models/user';
 import { userType } from "../interfaces/user";
 import config from '../config/config';
 import passport from 'passport';
