@@ -45,7 +45,7 @@ module.exports = function (app: any) {
                             following: 12,
                             resentProduct: 13, //최근 참여한 상품
                             ongoingProduct: [14, 15], //나의 진행 상품
-                            address: "서울특별시 공동구 구매로 21길 9-20호",
+                            address: "(12345) 서울시 서초구 강남대로 53길 8(원더동, 풀아파트), 210동 1127호",
                             lobbyAlarm: [],
                             dobbyAlarm: []
                         })

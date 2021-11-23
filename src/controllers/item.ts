@@ -111,7 +111,7 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
         }
         else if (foundItemInfo.targetNum.currentNum < foundItemInfo.targetNum.maxNum) { // 현재 인원 < 최대인원일시 배열에 추가하여 update
             const dobbyIDs: Array<number> = foundItemInfo.dobbyIDs; // 업데이트할 배열 선언
-
+            
             dobbyIDs.push(userId); // dobbyIDs 배열 뒤에 userId붙이기            
             await itemFindUpdateSet(itemId, { dobbyIDs: dobbyIDs }); // db에 업데이트            
             await itemFindUpdateInc(itemId, { "targetNum.currentNum": 1 }); // currentNum ++시키기
@@ -220,7 +220,7 @@ const changeProgress = async (req: Request, res: Response, next: NextFunction) =
                     }
                     else {
                         const dobbyAlarms: Array<object> = foundUserInfo.dobbyAlarm; // 업데이트할 배열 선언
-                        const addAlarm: string = "참여 중인 '" + foundItemInfo.title + "'의 공구모집 공구 모집이 종료되었습니다. 확인해보세요";
+                        const addAlarm: string = "참여 중인 '" + foundItemInfo.title + "'의 공구 모집이 종료되었습니다. 확인해보세요";
                         const addObject: object = {
                             itemId: itemId,
                             content: addAlarm
