@@ -32,7 +32,7 @@ module.exports = function (passport: any) {
         // 쿠키 제거
         req.session.destroy(() => {
             res.clearCookie('connect.sid');
-            res.send('logout done');
+            res.redirect('https://frontend-nine-black.vercel.app/menu');
         });
     });
 
