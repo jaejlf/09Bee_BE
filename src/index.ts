@@ -72,7 +72,7 @@ app.use(
     resave: false,
     // request가 들어오면 해당 request에서 새로 생성된 session에 아무런 작업이 이루어지지 않은 상황 
     // false -> 아무런 작업이 이루워지지 않은 경우 저장 X
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: mongoDBStore, //세션을 데이터베이스에 저장
     cookie: {
       sameSite: "none",
