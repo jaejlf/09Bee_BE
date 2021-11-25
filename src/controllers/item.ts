@@ -118,11 +118,13 @@ const dobbyIn = async (req: Request, res: Response, next: NextFunction) => {
 
             const lobbyId = foundItemInfo.lobbyID;
             const foundLobbyInfo: any = await userController.userFindOne(lobbyId); // 러비 api 데이터 가져옴
+            
+            const foundUpdateItemInfo: any = await itemFindOne(itemId); // 업데이트된 아이템 api 데이터 가져옴
             // 모집 인원 달성 시 && 러비 알람 비어 있을 시 충족 멘트 lobbyAlarm에 추가
-            if (foundItemInfo.targetNum.minNum <= foundItemInfo.targetNum.currentNum && foundLobbyInfo.lobbyAlarm.length === 0) {
+            if (foundUpdateItemInfo.targetNum.minNum <= foundUpdateItemInfo.targetNum.currentNum && foundLobbyInfo.lobbyAlarm.length === 0) {
                 const lobbyAlarms: Array<object> = foundLobbyInfo.lobbyAlarm; // 업데이트할 배열 선언
 
-                const addAlarm: string = "진행 중인 '" + foundItemInfo.title + "'의 공구모집 최소 인원이 충족되었습니다. 주문을 진행해보세요!";
+                const addAlarm: string = "진행 중인 '" + foundUpdateItemInfo.title + "'의 공구모집 최소 인원이 충족되었습니다. 주문을 진행해보세요!";
                 const addObject: object = {
                     itemId: itemId,
                     content: addAlarm
