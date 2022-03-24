@@ -1,10 +1,25 @@
-## 프로젝트 소개
-소비자를 위한 공동구매 플랫폼, 공구비입니다.
+# 공동구매 플랫폼, 공구비
 
-### 개발 언어 / 사용 라이브러리
-Typescript, NodeJS, Express, Passport
+![img](https://user-images.githubusercontent.com/78673570/159775617-d463a735-a53c-4d3f-974e-da966e2709d6.png)
 
-### 멤버
+## 🐥 프로젝트 소개 - 구현 기능
+
+- 소셜 로그인 (Google Login)
+- 공동구매 주최, 참여, 관리에 필요한 기능 개발
+
+<br><br>
+## 🛠 사용 프레임워크 / 라이브러리
+
+- Typescript, NodeJS
+- Express, Passport
+- MongoDB
+
+<br><br>
+## 📑 API 문서
+[09bee, API Documentation](https://www.notion.so/APIs-5f9f7bee733d4fc797b0d0ea4edeb53a)
+
+<br><br>
+## 👨‍👩‍👧‍👦 Team
 <table>
   <tbody>
     <tr>
